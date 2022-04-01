@@ -1,0 +1,17 @@
+---
+- name: this plabook installing packages
+  hosts: webservers
+  become: true
+  tasks:
+  - name: Install packages
+    yum : 
+      name: git
+      state: installed
+
+  - name: Install packages
+    yum: 
+      name: tree
+      state: installed
+
+
+
