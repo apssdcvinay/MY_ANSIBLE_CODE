@@ -2,7 +2,11 @@
 - name: this play book install httpd and apache2
   hosts: all
   become: true
+<<<<<<< HEAD
   tasks:  
+=======
+  tasks:
+>>>>>>> 541e36a316d6432039105f3f1a5850b4d0b73fb0
   - name: Install Apache web server
     yum:
      name: httpd
