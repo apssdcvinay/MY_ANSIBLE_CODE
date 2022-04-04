@@ -4,10 +4,11 @@
   become: true
   tasks:
   - name: Install Apache web server
-    yum: 
+    yum:
      name: httpd
      state: installed
   - name: stated web server
     service:
       name: httpd
       state: started
+
