@@ -1,0 +1,9 @@
+---
+- name: this plabook installing packages
+  hosts: webservers
+  become: true
+  tasks:
+  - name: Install packages
+    yum : 
+      name: ['git', 'make', 'gcc', 'wget', 'telnet', 'gzip']
+      state: installed
