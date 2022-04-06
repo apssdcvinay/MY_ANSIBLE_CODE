@@ -16,11 +16,7 @@
     when: ansible_os_family == "RedHat"
 
   - name: stop the apache2 service
-<<<<<<< HEAD
     service: 
-=======
-    service:
->>>>>>> 541e36a316d6432039105f3f1a5850b4d0b73fb0
      name: apache2
      state: stopped
     when: ansible_os_family == "Debian"
