@@ -1,0 +1,12 @@
+---
+- name: This playbook to test ansible valut
+  hosts: all
+  become: true
+  vars_files:
+    - valut-pass.yml
+  tasks:
+  - name: clone a repo
+    git:
+      repo: https://apssdcviany:{{ password }}@github.com/apssdcvinay/valut.git
+      dest: /opt/ansadmin/test-valut
+
