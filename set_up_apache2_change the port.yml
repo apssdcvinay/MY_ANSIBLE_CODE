@@ -1,38 +1,41 @@
-
 ---
 - name: this play book install webserver
   hosts: all
   become: true
   tasks:
-
+  # Install httpd packages in redhat and amazon-linux server
   - name: install packages
     yum:
      name: httpd
      state: installed
-    when: ansible_os_family == "RedHat"
+    when: ansible_os_family == "RedHat"    # it can only applt the RedHat severs
     notify: start apache
-
+  # Install apache2 package in ubuntu server
   - name: install apache2
     apt:
       name: apache2
       state: present
-    when: ansible_os_family == "Debian"
+    when: ansible_os_family == "Debian"    # it can only apply the ubuntu falvor
     notify: start apache2
 
+  # copy the index file in the websever home page
   - name: copy index.html
     copy:
       src: /opt/ansible/index.html
       dest: /var/www/html
-      mode: 0666
+      mode: 0666                          # file permission
 
+  # Change the default port on redhat and amazon-linux servers
   - name: change the default port
-    ansible.builtin.lineinfile:
-      path: /etc/httpd/conf/httpd.conf
-      regexp: '^Listen '
+    ansible.builtin.lineinfile:           # Module name
+      path: /etc/httpd/conf/httpd.conf    # default port path
+      regexp: '^Listen '                  # replace the name
       insertafter: '^#Listen '
-      line: Listen 8081
+      line: Listen 8081                   # change the port number
     when: ansible_os_family == "RedHat"
-    notify: restart apache
+    notify: restart apache                # alredy running state server it can notify
+
+ # Change the default port on ubuntu servers
 
   - name: change the default port
     ansible.builtin.lineinfile:
@@ -43,6 +46,7 @@
     when: ansible_os_family == "Debian"
     notify: restart apache2
 
+   #handlers are special tasks that only get executed when triggered via the notify directive
   handlers:
   - name: start apache
     yum:
