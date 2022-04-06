@@ -2,6 +2,8 @@
 - name: this play book install webserver
   hosts: all
   become: true
+  vars:
+   port: 8082
   tasks:
   # Install httpd packages in redhat and amazon-linux server
   - name: install packages
@@ -31,7 +33,7 @@
       path: /etc/httpd/conf/httpd.conf    # default port path
       regexp: '^Listen '                  # replace the name
       insertafter: '^#Listen '
-      line: Listen 8081                   # change the port number
+      line: Listen {{ port }}                   # change the port number
     when: ansible_os_family == "RedHat"
     notify: restart apache                # alredy running state server it can notify
 
@@ -42,7 +44,7 @@
        path: /etc/apache2/ports.conf
        regexp: '^Listen '
        insertafter: "# /etc/apache2/sites-enabled/000-default.conf"
-       line: Listen 8081
+       line: Listen {{ port }}
     when: ansible_os_family == "Debian"
     notify: restart apache2
 
